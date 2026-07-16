@@ -7271,11 +7271,17 @@ void QueryFuzzer::fuzz(ASTPtr & ast)
             /// ones that do not match the final verb so the statement stays reparseable both ways.
             if (create_user->alter)
             {
+                create_user->children.erase(
+                    std::remove(create_user->children.begin(), create_user->children.end(), create_user->roles),
+                    create_user->children.end());
                 create_user->roles.reset();
                 create_user->settings.reset();
             }
             else
             {
+                create_user->children.erase(
+                    std::remove(create_user->children.begin(), create_user->children.end(), create_user->new_name),
+                    create_user->children.end());
                 create_user->new_name.reset();
                 create_user->add_hosts.reset();
                 create_user->remove_hosts.reset();
@@ -7307,7 +7313,10 @@ void QueryFuzzer::fuzz(ASTPtr & ast)
                 create_role->settings.reset();
             else
             {
-                create_role->new_name.clear();
+                create_role->children.erase(
+                    std::remove(create_role->children.begin(), create_role->children.end(), create_role->new_name),
+                    create_role->children.end());
+                create_role->new_name.reset();
                 create_role->alter_settings.reset();
             }
         }

@@ -1,0 +1,31 @@
+1
+1
+0
+2
+0
+1
+0
+3
+0
+1
+1
+0
+1
+2
+0
+1
+1
+1
+0
+1
+1
+1
+1
+0
+1
+0
+REVOKE SELECT ON *.* FROM ALL
+GRANT SELECT ON *.* TO {g:Identifier}
+ALTER USER default RENAME TO {rename_user_04603:Identifier}
+ALTER ROLE default RENAME TO {rename_role_04603:Identifier}
+DROP ROLE IF EXISTS r1, `r2@%.myhost.com`
