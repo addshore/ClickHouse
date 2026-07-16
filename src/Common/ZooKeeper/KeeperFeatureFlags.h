@@ -32,6 +32,7 @@ enum class KeeperFeatureFlag : size_t
     GET_CHILDREN_RECURSIVE,
     CREATE_TTL,
     MAX_REQUEST_SIZE,
+    CREATE_CONTAINER,
 };
 
 class KeeperFeatureFlags
