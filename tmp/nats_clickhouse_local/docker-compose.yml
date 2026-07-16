@@ -1,0 +1,29 @@
+services:
+  nats:
+    image: nats:2.11-alpine
+    command: ["-c", "/workspace/jwt.conf"]
+    ports:
+      - "4222:4222"
+    volumes:
+      - ./:/workspace
+
+  nats-box:
+    image: natsio/nats-box:latest
+    depends_on:
+      - nats
+    entrypoint: ["/bin/sh", "-lc", "sleep infinity"]
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    depends_on:
+      - nats
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    volumes:
+      - ./:/workspace
+      - /home/adam/dev/github/ClickHouse/ClickHouse/ci/tmp/build/programs/clickhouse:/usr/bin/clickhouse:ro
